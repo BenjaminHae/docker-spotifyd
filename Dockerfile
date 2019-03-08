@@ -12,7 +12,7 @@ ARG groupid=45
 RUN groupadd -g ${groupid} ${user} && useradd -u ${userid} -g ${groupid} -ms /bin/false ${user}
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -q --yes --no-install-recommends \
-    pulseaudio-utils mpd mpc
+    pulseaudio-utils mpd mpc \
  && rm -rf /var/lib/apt/lists/*
     
 RUN mkdir -p /var/lib/mpd/music \
