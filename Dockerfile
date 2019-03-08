@@ -19,7 +19,7 @@ RUN mkdir -p /var/lib/mpd/music \
     && mkdir -p /var/lib/mpd/database \
     && mkdir -p /var/log/mpd/ \
     && chown -R ${user}:${group} /var/lib/mpd \
-    && chown -R ${user}:${group} /var/log/mpd/mpd.log
+    && chown -R ${user}:${group} /var/log/mpd
 
 # Declare a music , playlists and database volume (state, tag_cache and sticker.sql)
 VOLUME ["/var/lib/mpd/music", "/var/lib/mpd/playlists", "/var/lib/mpd/database"]
