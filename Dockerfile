@@ -9,12 +9,9 @@ ARG user=mpd
 ARG group=audio
 
 RUN apt-get update \
- && DEBIAN_FRONTEND=noninteractive apt-get install --yes pulseaudio-utils \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -q --yes pulseaudio-utils \
     mpd mpc
     
-RUN useradd -ms /bin/sh ${user} \
- && usermod -a -G ${group} ${user}
-
 RUN mkdir -p /var/lib/mpd/music \
     && mkdir -p /var/lib/mpd/playlists \
     && mkdir -p /var/lib/mpd/database \
