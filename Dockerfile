@@ -12,7 +12,7 @@ RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install --yes pulseaudio-utils \
     mpd mpc
     
-RUN useradd -ms /bin/sh ${user}
+RUN useradd -ms /bin/sh ${user} \
  && usermod -a -G ${group} ${user}
 
 RUN mkdir -p /var/lib/mpd/music \
