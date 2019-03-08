@@ -6,17 +6,18 @@ ENV MPC_VERSION 0.27-r0
 
 # https://docs.docker.com/engine/reference/builder/#arg
 ARG user=mpd
+ARG userid=45
 ARG group=audio
 
+RUN useradd -u ${userid} -ms /bin/false ${user} && usermod -a -G ${group} ${user}
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -q --yes pulseaudio-utils \
     mpd mpc
-RUN usermod -a -G audio mpd
     
 RUN mkdir -p /var/lib/mpd/music \
     && mkdir -p /var/lib/mpd/playlists \
     && mkdir -p /var/lib/mpd/database \
-    && mkdir -p /var/log/mpd/mpd.log \
+    && mkdir -p /var/log/mpd/ \
     && chown -R ${user}:${group} /var/lib/mpd \
     && chown -R ${user}:${group} /var/log/mpd/mpd.log
 
