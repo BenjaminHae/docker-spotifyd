@@ -9,7 +9,7 @@ ARG user=mpd
 ARG userid=45
 ARG groupid=45
 
-RUN useradd -u ${userid} -g ${groupid} -ms /bin/false ${user}
+RUN groupadd -g ${groupid} ${user} && useradd -u ${userid} -g ${groupid} -ms /bin/false ${user}
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -q --yes --no-install-recommends \
     pulseaudio-utils mpd mpc
