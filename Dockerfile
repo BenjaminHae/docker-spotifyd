@@ -26,6 +26,7 @@ RUN mkdir -p /var/lib/mpd/music \
 VOLUME ["/var/lib/mpd/music", "/var/lib/mpd/playlists", "/var/lib/mpd/database"]
 COPY mpd.conf /etc/mpd.conf
 COPY pulse-client.conf /etc/pulse/client.conf
+RUN sed -i "s/USERID/${userid}/;" /etc/pulse/client.conf
 
 USER ${user}
 RUN mkdir -p /home/mpd/.config/mpd
