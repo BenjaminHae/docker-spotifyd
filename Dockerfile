@@ -13,6 +13,8 @@ RUN groupadd -g ${groupid} ${user} && useradd -u ${userid} -g ${groupid} -ms /bi
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -q --yes --no-install-recommends \
     pulseaudio-utils mpd mpc \
+ && apt-get autoremove \
+ && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
     
 RUN mkdir -p /var/lib/mpd/music \
