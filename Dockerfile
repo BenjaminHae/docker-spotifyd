@@ -14,7 +14,10 @@ RUN apt-get update \
 
 RUN git clone --depth=1 --branch=${BRANCH} https://github.com/Spotifyd/spotifyd.git /tmp/spotifyd \
  && cd /tmp/spotifyd \
- && cargo build --release --features pulseaudio_backend
+ && cargo build --release --features pulseaudio_backend \
+ && cp -r /tmp/spotifyd/target/release /home/${user}/spotifyd \
+ && rm -r /tmp/spotifyd
+
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get remove -q --yes \
     libpulse-dev cargo build-essential git libasound2-dev libssl-dev libdbus-1-dev \
@@ -30,4 +33,4 @@ RUN mkdir -p /home/${user}/.config/
 
 VOLUME ["/home/${user}/.config"]
 
-CMD ["/usr/bin/spotifyd", "--no-daemon", "--config-path=/home/${user}/spotifyd"]
+CMD ["/home/${user}/spotifyd/spotifyd", "--no-daemon", "--config-path=/home/${user}/spotifyd"]
