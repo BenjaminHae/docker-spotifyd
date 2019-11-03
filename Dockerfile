@@ -3,8 +3,8 @@ MAINTAINER @BenjaminHae https://github.com/BenjaminHae
 
 # https://docs.docker.com/engine/reference/builder/#arg
 ARG user=spotify
-ARG userid=45
-ARG groupid=45
+ARG userid=46
+ARG groupid=46
 ARG BRANCH=master
 
 RUN groupadd -g ${groupid} ${user} && useradd -u ${userid} -g ${groupid} -ms /bin/false ${user}
