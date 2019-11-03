@@ -11,6 +11,8 @@ RUN groupadd -g ${groupid} ${user} && useradd -u ${userid} -g ${groupid} -ms /bi
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -q --yes --no-install-recommends \
     pulseaudio-utils cargo libpulse-dev build-essential git ca-certificates
+RUN apt-get install libasound2-dev libssl-dev libpulse-dev libdbus-1-dev
+
 
 RUN git clone --depth=1 --branch=${BRANCH} https://github.com/Spotifyd/spotifyd.git /tmp/spotifyd \
  && cd /tmp/spotifyd \
