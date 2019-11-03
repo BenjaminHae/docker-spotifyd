@@ -30,4 +30,4 @@ RUN mkdir -p /home/${user}/.config/
 
 VOLUME ["/home/${user}/.config"]
 
-CMD ["spotifyd", "--no-daemon"]
+CMD ["/usr/bin/spotifyd", "--no-daemon"]
