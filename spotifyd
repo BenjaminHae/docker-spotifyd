@@ -7,7 +7,7 @@ password = password
 
 # The audio backend used to play the your music. To get
 # a list of possible backends, run `spotifyd --help`.
-backend = pulse
+backend = pulseaudio
 
 # The name that gets displayed under the connect tab on
 # official clients. Spaces are not allowed!
