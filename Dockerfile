@@ -10,7 +10,7 @@ ARG BRANCH=master
 RUN groupadd -g ${groupid} ${user} && useradd -u ${userid} -g ${groupid} -ms /bin/false ${user}
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -q --yes --no-install-recommends \
-    pulseaudio-utils cargo libpulse-dev build-essential git
+    pulseaudio-utils cargo libpulse-dev build-essential git ca-certificates
 
 RUN git clone --depth=1 --branch=${BRANCH} https://github.com/Spotifyd/spotifyd.git /tmp/spotifyd \
  && cd /tmp/spotifyd \
