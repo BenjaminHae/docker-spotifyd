@@ -29,8 +29,7 @@ COPY pulse-client.conf /etc/pulse/client.conf
 RUN sed -i "s/USERID/${userid}/;" /etc/pulse/client.conf
 
 USER ${user}
-RUN mkdir -p /home/${user}/.config/
 
-VOLUME ["/home/${user}/.config"]
+VOLUME ["/home/${user}"]
 
-CMD ["/home/${user}/spotifyd/spotifyd", "--no-daemon", "--config-path=/home/${user}/spotifyd.conf"]
+CMD ["/home/spotify/spotifyd/spotifyd", "--no-daemon", "--config-path=/home/spotify/spotifyd.conf"]
