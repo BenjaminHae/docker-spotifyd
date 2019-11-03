@@ -33,4 +33,4 @@ RUN mkdir -p /home/${user}/.config/
 
 VOLUME ["/home/${user}/.config"]
 
-CMD ["/home/${user}/spotifyd/spotifyd", "--no-daemon", "--config-path=/home/${user}/spotifyd"]
+CMD ["/home/${user}/spotifyd/spotifyd", "--no-daemon", "--config-path=/home/${user}/spotifyd.conf"]
