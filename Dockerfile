@@ -10,7 +10,7 @@ ARG BRANCH=master
 RUN groupadd -g ${groupid} ${user} && useradd -u ${userid} -g ${groupid} -ms /bin/false ${user}
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -q --yes --no-install-recommends \
-    pulseaudio-utils cargo libpulse-dev build-essential git ca-certificates libasound2-dev libssl-dev libdbus-1-dev
+    pulseaudio-utils cargo libpulse-dev build-essential git ca-certificates libasound2 libdbus-1 libssl libpulse libasound2-dev libssl-dev libdbus-1-dev
 
 RUN git clone --depth=1 --branch=${BRANCH} https://github.com/Spotifyd/spotifyd.git /tmp/spotifyd \
  && cd /tmp/spotifyd \
@@ -20,7 +20,7 @@ RUN git clone --depth=1 --branch=${BRANCH} https://github.com/Spotifyd/spotifyd.
 
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get remove -q --yes \
-    libpulse-dev cargo build-essential git libssl-dev libdbus-1-dev \
+    libpulse-dev cargo build-essential git libasound2-dev libssl-dev libdbus-1-dev \
  && DEBIAN_FRONTEND=noninteractive apt-get autoremove -q --yes \
  && DEBIAN_FRONTEND=noninteractive apt-get clean -q --yes \
  && rm -rf /var/lib/apt/lists/*
