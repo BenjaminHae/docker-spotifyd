@@ -1,1 +1,1 @@
-# docker-mpd-pulse
+# docker-spotifyd-pulse

@@ -1,41 +1,33 @@
 FROM ubuntu:18.04
 MAINTAINER @BenjaminHae https://github.com/BenjaminHae
 
-ENV MPD_VERSION 0.19.12-r0
-ENV MPC_VERSION 0.27-r0
-
 # https://docs.docker.com/engine/reference/builder/#arg
-ARG user=mpd
+ARG user=spotify
 ARG userid=45
 ARG groupid=45
+ARG BRANCH=master
 
 RUN groupadd -g ${groupid} ${user} && useradd -u ${userid} -g ${groupid} -ms /bin/false ${user}
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -q --yes --no-install-recommends \
-    pulseaudio-utils mpd mpc \
+    pulseaudio-utils cargo libpulse-dev build-essential
+
+RUN git clone --depth=1 --branch=${BRANCH} https://github.com/Spotifyd/spotifyd.git /tmp/spotifyd \
+ && cd /tmp/spotifyd \
+ && cargo build --release --features pulseaudio_backend
+
+RUN apt-get remove  -q --yes --no-install-recommends \
+    libpulse-dev cargo build-essential \
  && apt-get autoremove \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
     
-RUN mkdir -p /var/lib/mpd/music \
-    && mkdir -p /var/lib/mpd/playlists \
-    && mkdir -p /var/lib/mpd/database \
-    && mkdir -p /var/log/mpd/ \
-    && chown -R ${user} /var/lib/mpd \
-    && chown -R ${user} /var/log/mpd
-
-# Declare a music , playlists and database volume (state, tag_cache and sticker.sql)
-VOLUME ["/var/lib/mpd/music", "/var/lib/mpd/playlists", "/var/lib/mpd/database"]
-COPY mpd.conf /etc/mpd.conf
 COPY pulse-client.conf /etc/pulse/client.conf
 RUN sed -i "s/USERID/${userid}/;" /etc/pulse/client.conf
 
 USER ${user}
-RUN mkdir -p /home/mpd/.config/mpd
-COPY mpd.conf /home/mpd/.config/mpd/mpd.conf
+RUN mkdir -p /home/${user}/.config/
 
-# Entry point for mpc update and stuff
-EXPOSE 6600
+VOLUME ["/home/${user}/.config"]
 
-
-CMD ["mpd", "--stdout", "--no-daemon"]
+CMD ["spotifyd", "--no-daemon"]
