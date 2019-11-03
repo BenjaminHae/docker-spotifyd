@@ -17,10 +17,10 @@ RUN git clone --depth=1 --branch=${BRANCH} https://github.com/Spotifyd/spotifyd.
  && cd /tmp/spotifyd \
  && cargo build --release --features pulseaudio_backend
 
-RUN apt-get remove  -q --yes --no-install-recommends \
+RUN DEBIAN_FRONTEND=noninteractive apt-get remove -q --yes \
     libpulse-dev cargo build-essential git \
- && apt-get autoremove \
- && apt-get clean \
+ && DEBIAN_FRONTEND=noninteractive apt-get autoremove -q --yes \
+ && DEBIAN_FRONTEND=noninteractive apt-get clean -q --yes \
  && rm -rf /var/lib/apt/lists/*
     
 COPY pulse-client.conf /etc/pulse/client.conf
